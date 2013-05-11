@@ -1,0 +1,21 @@
+<div style="-webkit-column-count: 2;">
+<ul>
+<li>ls</li>
+<li>ls table</li>
+<li>ls grid</li>
+<li>ls text</li>
+<li>ls sort(created)</li>
+<li>ls sort(size) reverse</li>
+<li>[directory] go</li>
+<li>[filename] properties</li>
+<li>[image filename] show</li>
+<li>[text filename] show</li>
+<li>[code filename] show</li>
+<li>[login shell command]</li>
+<li>history</li>
+<li>history text</li>
+<li>ls keep([filename or glob])</li>
+<li>ls drop([filename or glob])</li>
+<li>[combinations of the above]</li>
+</ul>
+</div>

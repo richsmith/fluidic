@@ -1,0 +1,13 @@
+<h2 style="text-shadow: 
+  0.1em 0.4em 0.1em #700,
+  0.6em 0.1em 0.1em green,
+  0.4em -0.3em 0.1em blue">
+Fluidic 
+&nbsp;&nbsp
+<span style="font-size: small"><em>rethinking the shell</em></span>
+</h2>
+
+<p style="clear:both">Fluidic is part of the new generation of graphical consoles. It is in Alpha and should be considered very much experimental. As such, everything is subject to change. Using Fluidic to manipulate irreplaceable data is not recommended.</p>
+<p>For a list of commands to try, enter <tt>suggest</tt>.
+<p>Comments are welcomed: fluidic@hwyl.org</p>
+<p>&copy; Rich Smith, Cardiff 2012. Made available under the GNU GPL.</p>
