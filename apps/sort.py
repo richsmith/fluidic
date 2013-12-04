@@ -18,16 +18,6 @@ def execute(input, options, environment):
 
     field_str = options[0]
 
-    print "executing sort for input len " + str(len(input))
-
-    #input.sort(key=lambda item: getattr(item, field_str))
-
-
     output = sorted(input, key=lambda item: getattr(item, field_str))
-
-
-
-    print "input now len " + str(len(input))
-
 
     return output
