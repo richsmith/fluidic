@@ -10,10 +10,11 @@ import operator
      output = iotypes.File,
      autoserial = False)
 def execute(input, options, environment):
-    assert len(options) > 0
 
-    #assume only sorting on one field for now
-    assert len(options) == 1
+    if (len(options) == 0):
+        raise Exception("Need at least one field to sort on")
+    if (len(options) > 1):
+        raise Exception("Can't sort on more than field yet")
 
     field_str = options[0]
 

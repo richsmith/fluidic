@@ -1,3 +1,5 @@
+Fluidic is a next-generation graphical shell.
+
 Fluidic currently only works on Ubuntu. It might work on another Gnome environment or partly work in other environments but not yet tested...
 
 To use, install the following libraries:
