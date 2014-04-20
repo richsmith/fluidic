@@ -2,39 +2,19 @@ from model import iotypes, pipeline, registry
 from util import html, globbing
 import processor, access, new_lexer
 
-# def old_get_pipeline(string):
-    
-#     new_pipeline = pipeline.Pipeline()
-
-#     tokens = tokenise(string)
-
-#     for token in tokens:
-#         command = process_token(token)
-#         new_pipeline.add(command)
-
-#     ensure_pipeline_terminates(new_pipeline)
-    
-#     print new_pipeline.describe()
-
-#     return new_pipeline
-
-
 
 def create_pipeline(string):
     
     new_pipeline = pipeline.Pipeline()
 
     structured_tokens = new_lexer.lex(string)
-    print 'structured tokens: ' + str(structured_tokens)
 
     for token in structured_tokens:
-        print "handling token " + str(token)
         command_str, options = token
         command = get_command(command_str, options)
-        print "about to add command " + str(command)
         new_pipeline.add(command)
 
-    print new_pipeline.describe()
+    # print new_pipeline.describe()
 
     ensure_pipeline_terminates(new_pipeline)
 
@@ -45,20 +25,9 @@ def ensure_pipeline_terminates(pipeline):
     if not ends_in_valid_renderer(pipeline):
         intelligently_add_renderer(pipeline)
 
+
 def ends_in_valid_renderer(pipeline):
     return pipeline.output in [None, iotypes.Nothing, iotypes.Html]
-
-# def old_process_token(part):
-#     command_str, args = parse_command(part)
-#     assert command_str != None
-#     assert args != None
-#     command = get_command(command_str, args)
-#     if not command:
-#         message = "Command " + html.strong(str(command_str)) + \
-#             " not understood"
-#         raise Exception(message)
-
-#     return command
 
 
 def get_command(command_str, options):
@@ -99,7 +68,7 @@ def check_for_external(command_str, options):
 
 # def check_for_directory(command_str, options):
 #     # making this into a go command is a temporary hack;
-#     # maybe we should probably go to a dir if it is output at the end?
+#     # maybe we should go to a dir if it is output at the end?
 #     if access.is_accessible_directory(command_str):
 #         app = registry.get_app("go")
 #         options = [command_str]
@@ -138,7 +107,7 @@ def intelligently_add_renderer(new_pipeline):
     else:
         raise Exception("Unexpected typing error; please check the code")
 
-    print "app is " + str(app)
+    # print "app is " + str(app)
 
     renderer = pipeline.Command(app, [None])
     new_pipeline.add(renderer)
@@ -159,13 +128,5 @@ def parse_command(string):
         args = []
 
     return command, args
-
-
-
-
-def tokenise(string):
-    string = string.strip()
-    commands = string.split("|")
-    return commands
 
 
