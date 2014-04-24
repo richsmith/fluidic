@@ -19,10 +19,10 @@ def lex(text):
 
     for match in re.finditer(pattern, text):
         command = match.group('command')
-        print "command_str = " + str(match.group('command'))
+        # print "command_str = " + str(match.group('command'))
         option_str = match.group('options')
         options = option_str.split() if option_str else []
-        print "options are " + str(options)
+        # print "options are " + str(options)
         chunk = command, options
         commands.append(chunk)
 

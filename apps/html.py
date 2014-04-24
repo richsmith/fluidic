@@ -9,11 +9,14 @@ from model import iotypes
      input = iotypes.Text,
      output = iotypes.Html)
 def execute(input, options, environment):
-    output = "<pre>"
-    for line in input:
-        output = output + line
-    output = output + "</pre>"
-    print "output = " + str(output)
+
+    output = "<pre>" + input + "</pre>"
+
+    # for line in input:
+    #     output = output + line
+
+    # output = output + "</pre>"
+
     return output
         
 
