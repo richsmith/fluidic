@@ -86,6 +86,9 @@ def check_for_file(command_str, options):
 def check_for_unknown(command_str, options):
     # if we get to this point we don't know what the user is requesting
     app = registry.get_app("unknown")
+    options = [command_str]
+    if app == None:
+        raise Exception('App "Unknown" is missing')
     return pipeline.Command(app, options)
 
 

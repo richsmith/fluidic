@@ -30,11 +30,11 @@ class Pipeline:
     def execute(self, environment):
         data = None
         for command in self.commands:
-            print 'executing ' + str(command) + ' for data ' + str(data)
+            #print 'executing ' + str(command) + ' for data ' + str(data)
             assert command.options != None
             data = command.app.function(data, command.options, environment)
-            print 'pipeline: after executing ' + str(command) + \
-                ', data is ' + str(data)
+            #print 'pipeline: after executing ' + str(command) + \
+            #    ', data is ' + str(data)
         return data
 
 

@@ -2,7 +2,7 @@ import model.environment
 import parser
 import access
 
-
+import apps.unknown
 import apps.grid, apps.table
 import apps.ls, apps.go, apps.properties, apps.recurse
 import apps.sort, apps.reverse, apps.keep, apps.drop
