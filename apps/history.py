@@ -4,7 +4,7 @@ from model.app import app
 from model import iotypes
 
 @app(name = 'history',
-     input = None,
+     input = iotypes.Nothing,
      output = iotypes.Text,
      preferred_renderer = 'ol',
      autoserial = False)

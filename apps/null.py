@@ -5,7 +5,7 @@ from model import iotypes
 
 @app(name = "null",
      input = iotypes.Any,
-     output = None)
+     output = iotypes.Nothing)
 def execute(input, options, environment):
     return 
 

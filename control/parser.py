@@ -1,3 +1,5 @@
+import os
+
 from model import iotypes, pipeline, registry
 from util import html, globbing
 import processor, access, new_lexer
@@ -15,15 +17,25 @@ def create_pipeline(string):
         new_pipeline.add(command)
 
     # print new_pipeline.describe()
-
+    ensure_pipeline_starts(new_pipeline)
     ensure_pipeline_terminates(new_pipeline)
 
     return new_pipeline
 
 
+def ensure_pipeline_starts(pipeline):
+    if not starts_with_valid_command(pipeline):
+        intelligently_add_start(pipeline)
+
+
 def ensure_pipeline_terminates(pipeline):
     if not ends_in_valid_renderer(pipeline):
         intelligently_add_renderer(pipeline)
+
+
+def starts_with_valid_command(pipeline):
+    first_app = pipeline.commands[0].app
+    return first_app.can_take(iotypes.Nothing)
 
 
 def ends_in_valid_renderer(pipeline):
@@ -36,7 +48,6 @@ def get_command(command_str, options):
         [check_for_null,
          check_for_app,
          check_for_external,
-         #check_for_directory,
          check_for_file,
          check_for_unknown]
     
@@ -66,14 +77,6 @@ def check_for_external(command_str, options):
         options.insert(0, command_str)
         return pipeline.Command(app, options)
 
-# def check_for_directory(command_str, options):
-#     # making this into a go command is a temporary hack;
-#     # maybe we should go to a dir if it is output at the end?
-#     if access.is_accessible_directory(command_str):
-#         app = registry.get_app("go")
-#         options = [command_str]
-#         return pipeline.Command(app, options)
-       
 def check_for_file(command_str, options):
     path = access.interpret_path(command_str)
     
@@ -105,15 +108,22 @@ def intelligently_add_renderer(new_pipeline):
         app = registry.get_app('html')
     elif new_pipeline.output == iotypes.File:
         app = registry.get_app('grid')
-    # elif new_pipeline.output == iotypes.ListOfFiles:
-    #     app = registry.get_app("grid")
     else:
         raise Exception("Unexpected typing error; please check the code")
 
-    # print "app is " + str(app)
-
     renderer = pipeline.Command(app, [None])
     new_pipeline.add(renderer)
+
+
+def intelligently_add_start(new_pipeline):
+
+    if new_pipeline.input == iotypes.File:
+        app = registry.get_app('file')
+        command = pipeline.Command(app, [os.getcwd()])
+        new_pipeline.add_to_start(command)
+    else:
+        raise Exception(
+            "Not sure how to wire up an input of " + str(new_pipeline.input))
 
 
 def parse_command(string):

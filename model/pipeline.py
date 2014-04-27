@@ -41,6 +41,9 @@ class Pipeline:
     def add(self, command):
         self.commands.append(command)
 
+    def add_to_start(self, command):
+        self.commands.insert(0, command)
+
 
     def describe(self):
         description = '/ (Start of pipeline)\n'

@@ -7,7 +7,7 @@ from util import html
 
 @app(name = "go",
      input = iotypes.Directory,
-     output = None)
+     output = iotypes.Nothing)
 def execute(input, options, environment):
 
     assert len(options) == 0 or len(options) == 1

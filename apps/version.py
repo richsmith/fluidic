@@ -5,7 +5,7 @@ from model import iotypes
 from control import output
 
 @app(name = "version",
-     input = None,
+     input = iotypes.Nothing,
      output = iotypes.Html)
 def execute(input, options, environment):
     import fluidic # FIXME put at top without breaking

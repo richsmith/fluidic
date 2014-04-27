@@ -5,10 +5,12 @@ from model import iotypes
 from control import access, parser
 
 @app(name = "pipeline",
-     input = None,
+     input = iotypes.Nothing,
      output = iotypes.Text,
      preferred_renderer = 'ol')
 def execute(input, options, environment):
+    # Shouldn't the input be a string of the command instead of the data
+    # being passed as an option?
 
     command_str = " ".join(options)
     pipeline = parser.create_pipeline(command_str)
@@ -18,7 +20,6 @@ def execute(input, options, environment):
         output.append(describe(command))
 
     return output
-    #return "This command disabled until the new syntax is worked out"
 
 def describe(command):
     description = command.app.name

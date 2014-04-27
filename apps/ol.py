@@ -4,7 +4,7 @@ from model import iotypes
 from util import html
 
 @app(name = 'ol',
-     input = iotypes.Any,
+     input = iotypes.Text,
      output = iotypes.Html,
      autoserial = False)
 def execute(input, options, environment):

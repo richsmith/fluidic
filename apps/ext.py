@@ -5,7 +5,7 @@ from model.app import app
 from model import iotypes
 
 @app(name = "ext",
-     input = iotypes.Text,
+     input = [iotypes.Nothing, iotypes.Text],
      output = iotypes.Text)
 def execute(input, options, environment):
 

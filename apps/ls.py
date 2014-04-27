@@ -5,15 +5,18 @@ from model import iotypes
 from apps import sort
 
 @app(name = "ls",
-     input = iotypes.Directory, # eventually, files or dir
+     input = iotypes.File, # eventually, files or dir
      output = iotypes.File, # outputs filtered files
      preferred_renderer = 'grid')
 def execute(input, options, environment):
 
     if input == None:
         input = os.getcwd()
+        filenames = os.listdir(input)
+    else:
+        print "input to ls is " + str(input.path)
+        filenames = os.listdir(input.path)
 
-    filenames = os.listdir(input)
     filenames = get_visible_files(filenames)
 
     files = []
@@ -25,7 +28,7 @@ def execute(input, options, environment):
         else:
             files.append(iotypes.File(path))
 
-    files = sort.execute(files, ['name'], None) # temp solution!?
+    files = default_sort(files)
 
     return files
 
@@ -41,3 +44,6 @@ def is_hidden(name):
 
 def is_archive(name):
     return name.endswith('~')
+
+def default_sort(files):
+    return sort.execute(files, ['name'], None)

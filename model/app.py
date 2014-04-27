@@ -39,6 +39,15 @@ class App(object):
 
         return outputs
 
+    def can_take(self, type):
+        """Whether the specified type is a suitable input for the app"""
+        # TODO
+        # we need to consider hierarchies here; e.g. Any is superclass of all
+        try:
+            return type in self.input
+        except TypeError:
+            return type == self.input
+
 
 
 def app(**kwargs):

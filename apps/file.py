@@ -7,7 +7,7 @@ from util import globbing
 
 
 @app(name = "file",
-     input = (None, iotypes.File),
+     input = (iotypes.Nothing, iotypes.File),
      output = iotypes.File,
      autoserial = None,
      preferred_renderer = 'show')

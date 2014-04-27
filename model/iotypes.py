@@ -5,9 +5,11 @@ import time
 
 class Input(object):
     pass
+        
 
 class Any(object):
-    pass
+    def __str__(self):
+        return "Type " + self.__class__.__name__
 
 class Html(Any):
     pass
