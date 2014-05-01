@@ -6,7 +6,7 @@ div {
 
 body{
 /* background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(47%,rgba(246,246,246,1)), color-stop(100%,rgba(237,237,237,1))); */
-background-color: silver;
+background-color: Silver;
 background-position: fixed;
 }
 
@@ -23,6 +23,7 @@ background-position: fixed;
     /* margin-left: 10px; */
     /*border-left: thin dotted gray;
     border-right: thin dotted gray;*/
+	border: thin gray solid;
     border-radius: 7px;
 }
 .command {
@@ -33,8 +34,8 @@ background-position: fixed;
     color: black;
     font-size: small;
     font-weight: bold;
-    border-top: thin solid gr  ay;
-    border-bottom: thin solid gray;
+    border: thin solid gray;
+    /*border-bottom: thin solid gray;*/
     /*border-left: thin dotted gray;
     border-right: thin dotted gray;*/
     border-radius: 7px;
@@ -118,16 +119,19 @@ table img {
 
 
 .error {
-  color: black;
-  padding: 5px;
-  border: thin red dashed;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: black;
+    background: white;
+    padding: 5px;
+    border: thin red solid;
 }
 .error:before {
     content: "!";
     font-weight: bold;
     color: white;
     background: red;
-    /*border: thin black solid;*/
+    border: thin black solid;
     margin-right: 5px;
     padding-left: 3px;
     padding-right: 3px;
@@ -149,7 +153,7 @@ table img {
     box-shadow: 5px 5px 5px #888;
 }
 .show img {
-    width: 250px;
+    width: 400px;
     border-radius: 5px;
    
 }
