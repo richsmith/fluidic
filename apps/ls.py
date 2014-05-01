@@ -14,7 +14,6 @@ def execute(input, options, environment):
         input = os.getcwd()
         filenames = os.listdir(input)
     else:
-        print "input to ls is " + str(input.path)
         filenames = os.listdir(input.path)
 
     filenames = get_visible_files(filenames)
