@@ -2,7 +2,7 @@ import os
 
 from model.app import app
 from model import iotypes
-from control import access, parser
+from control import access, parser, builder
 
 @app(name = "pipeline",
      input = iotypes.Nothing,
@@ -13,7 +13,9 @@ def execute(input, options, environment):
     # being passed as an option?
 
     command_str = " ".join(options)
-    pipeline = parser.create_pipeline(command_str)
+
+    commands = parser.parse(command_str)
+    pipeline = builder.create_pipeline(commands)
 
     output = []
     for command in pipeline.commands:
