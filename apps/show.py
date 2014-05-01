@@ -41,8 +41,9 @@ def show_image(file):
 
 
 def show_text(file):
-    #return html.div(access.read_file(file), clazz='show')
-    return access.read_file(file.path)
+    content = access.read_file(file.path)
+    content = content.replace('\n', '<br />')
+    return content
 
 def show_code(file):
     #return html.div(access.read_file(file), clazz='show')
