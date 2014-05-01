@@ -28,13 +28,14 @@ def handle_key_press(widget, event):
         global history_index
         history_index = 0
 
-        result = ui_interface.enter(text)
-        assert result != None
-        if result != []:
-            if isinstance(result, list):
-                output.print_outputs(result)
-            else:
-                output.print_output(result)
+        if text != '':
+            result = ui_interface.enter(text)
+        #assert result != None
+            if result != []:
+                if isinstance(result, list):
+                    output.print_outputs(result)
+                else:
+                    output.print_output(result)
 
         window.refresh()
 
