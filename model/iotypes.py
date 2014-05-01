@@ -68,10 +68,17 @@ class File(Any):
     mime = property(get_mime_type)
 
     def get_tooltip(self):
-        return self.get_name() + "\n" + self.describe_size()
+        name = self.get_name()
+        try:
+            size = self.describe_size()
+        except OSError:
+            size = 'Unknown size'
+
+        return name + "\n" + size
 
     def describe_size(self):
-        return str(describe.describe_file_size(self.get_size()))
+        size = describe.describe_file_size(self.get_size())
+        return str(size)
 
     def describe_type(self):
         return "File"        
@@ -131,8 +138,9 @@ class CodeFile(TextFile):
 
 class Directory(File):
     def describe_size(self):
-        num_files = len(os.listdir(self.path)) 
-        return str(num_files) + ' ' + describe.pluralise('item', num_files)
+            num_files = len(os.listdir(self.path))
+            return str(num_files) + ' ' + describe.pluralise('item', num_files)
+
     def describe_type(self):
         return "Folder"
     def __str__(self):
