@@ -3,6 +3,7 @@ import buffer
 from control import icon
 from control import access
 
+
 def create_window():
     # Create a GTK+ window
     global window
@@ -22,8 +23,7 @@ def create_window():
     # web_view.set_editable(True) <- hmm, look into this!
 
     # disable right-click
-    web_view.props.settings.props.enable_default_context_menu = False
-
+    # web_view.props.settings.props.enable_default_context_menu = False
 
     web_view.connect('size-allocate', autoscroll_view) # auto scroll to bottom
 
@@ -75,8 +75,6 @@ def autoscroll_view(view, allocation):
     
 
 def refresh():
-    #web_view.open("file:///home/rls/coding/fluidic/view/output.html")
-    
     #web_view.loadString(buffer.get_buffer())
 
     #html = "<html><body><h1>hi world</h1></body></html>"
@@ -91,26 +89,31 @@ def refresh():
 def get_view_html():
     #template = get_template()
     output = None
-    with open('/home/rls/coding/fluidic/view/output.html', 'r') as file:
+    output_path = access.get_abs_base_dir_path() + 'view/output.html'
+    with open(output_path, 'r') as file:
         output = file.read()
 
+    style_path = get_css_location()
 
     from string import Template
     template = Template(get_template())
-    html = template.substitute(content=output)
+    html = template.substitute(content=output, style=style_path)
 
     return str(html)
 
 
+def get_css_location():
+    return access.get_abs_base_dir_path() + 'view/stylesheet.css'
+
+
 def get_template():
-    #global template
-    #if template == None:
+    # if template == None:
     template = load_template()
     return template
         
 
 def load_template():
-    template_path = '/home/rls/coding/fluidic/view/template.html'
+    template_path = access.get_abs_base_dir_path() + 'view/template.html'
     template = None
     with open(template_path, "r") as file:
         template = file.read()

@@ -1,5 +1,6 @@
 import os
 import model.iotypes
+import locator
 
 def interpret_path(path):
     """Transforms a user-supplied path into a form Fluidic can work with."""
@@ -92,4 +93,5 @@ def get_resource_path(name):
 
 
 def get_abs_base_dir_path():
-    return '/home/rls/coding/fluidic/'
+    return locator.module_path() + os.sep
+

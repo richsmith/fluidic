@@ -1,9 +1,10 @@
 import apps
 from util import html
+from control import access
 
 ##### stuff to write to html; to be done properly
 
-output_file = "/home/rls/coding/fluidic/view/output.html"
+output_file = access.get_abs_base_dir_path() + 'view/output.html'
 
 def print_input(input):
     add_output(input, "command")
