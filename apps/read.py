@@ -5,6 +5,7 @@ from model import iotypes
 from control import access
 
 @app(name = "read",
+     aliases = ["<"],
      input = iotypes.File,
      output = iotypes.Text)
 def execute(input, options, environment):

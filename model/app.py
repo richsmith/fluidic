@@ -7,9 +7,11 @@ class App(object):
                  input = None,
                  output = None,
                  autoserial = True,
-                 preferred_renderer = None):
+                 preferred_renderer = None,
+                 aliases = []):
         self.function = function
         self.name = name
+        self.aliases = aliases
         self.input = input
         self.output = output
         self.preferred_renderer = preferred_renderer

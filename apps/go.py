@@ -5,7 +5,8 @@ from model import iotypes
 from control import access
 from util import html
 
-@app(name = "go",
+@app(name = 'go',
+     aliases = ['cd'],
      input = iotypes.Directory,
      output = iotypes.Nothing)
 def execute(input, options, environment):

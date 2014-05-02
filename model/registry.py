@@ -49,16 +49,22 @@ class Singleton:
 class AppRegistry():
 
     def __init__(self):
-        self.apps = set()
+        self.apps = set() # <- Now redundant?
+        self.by_alias = {}
 
     def register(self, app):
-        #print "Registering " + app.name
         self.apps.add(app)
+        self.add_alias(app, app.name)
+        for alias in app.aliases:
+            self.add_alias(app, alias)
+
+    def add_alias(self, app, alias):
+        if (alias in self.by_alias):
+            print "WARNING: Conflicting alias " + str(alias)
+        self.by_alias[alias] = app
 
     def get(self, name):
-        for b in self.apps:
-            if b.name == name:
-                return b
+        return self.by_alias[name] if name in self.by_alias else None
 
 def get_app(name):
     """Returns an app by name"""
