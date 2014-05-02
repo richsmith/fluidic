@@ -74,7 +74,7 @@ def intelligently_add_renderer(new_pipeline):
     else:
         raise Exception("Unexpected typing error; please check the code")
 
-    renderer = pipeline.Command(app, [None])
+    renderer = pipeline.Command(app, [])
     new_pipeline.add(renderer)
 
 
