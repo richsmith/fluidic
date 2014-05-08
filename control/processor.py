@@ -5,14 +5,15 @@ import access
 import apps.unknown
 import apps.grid, apps.table
 import apps.ls, apps.go, apps.properties, apps.recurse
+import apps.read, apps.write, apps.remove, apps.move, apps.copy
 import apps.sort, apps.reverse, apps.keep, apps.drop
 import apps.history, apps.version, apps.show
 import apps.error, apps.ext, apps.exit
-import apps.read, apps.text, apps.html
+import apps.text, apps.html
 import apps.ol
 import apps.null, apps.file
 import apps.clear
-import apps.about, apps.suggest
+import apps.welcome, apps.about, apps.suggest
 
 #debugging
 import apps.pipeline
