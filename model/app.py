@@ -1,4 +1,5 @@
 import registry
+import iotypes
 
 class App(object):
     def __init__(self,
@@ -46,9 +47,9 @@ class App(object):
         # TODO
         # we need to consider hierarchies here; e.g. Any is superclass of all
         try:
-            return type in self.input
+            return (type in self.input) or (self.input == iotypes.Any)
         except TypeError:
-            return type == self.input
+            return type == self.input or self.input == iotypes.Any
 
 
 
