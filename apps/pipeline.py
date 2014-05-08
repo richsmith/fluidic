@@ -17,10 +17,7 @@ def execute(input, options, environment):
     commands = parser.parse(command_str)
     pipeline = builder.create_pipeline(commands)
 
-    output = []
-    for command in pipeline.commands:
-        output.append(describe(command))
-
+    output = [describe(command) for command in pipeline.commands]
     return output
 
 def describe(command):
