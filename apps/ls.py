@@ -4,13 +4,14 @@ from model.app import app
 from model import iotypes
 from apps import sort
 
-@app(name = "ls",
+@app(name = 'ls',
      input = iotypes.File, # eventually, files or dir
      output = iotypes.File, # outputs filtered files
      preferred_renderer = 'grid')
 def execute(input, options, environment):
 
     if input == None:
+        print 'Deprecated - fix ls!'
         input = os.getcwd()
         filenames = os.listdir(input)
     else:
