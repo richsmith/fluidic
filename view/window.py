@@ -3,8 +3,12 @@ import buffer
 from control import icon
 from control import access
 
+# Keep this around at the module level for performance 
+# (so we can avoid reloading)
+template = None
 
 def create_window():
+
     # Create a GTK+ window
     global window
     window = gtk.Window()
@@ -23,7 +27,7 @@ def create_window():
     # web_view.set_editable(True) <- hmm, look into this!
 
     # disable right-click
-    # web_view.props.settings.props.enable_default_context_menu = False
+    web_view.props.settings.props.enable_default_context_menu = False
 
     web_view.connect('size-allocate', autoscroll_view) # auto scroll to bottom
 
@@ -87,7 +91,6 @@ def refresh():
     window.set_title(os.getcwd() + " | Fluidic")
 
 def get_view_html():
-    #template = get_template()
     output = None
     output_path = access.get_abs_base_dir_path() + 'view/output.html'
     with open(output_path, 'r') as file:
@@ -107,8 +110,9 @@ def get_css_location():
 
 
 def get_template():
-    # if template == None:
-    template = load_template()
+    global template
+    if template is None:
+        template = load_template()
     return template
         
 
