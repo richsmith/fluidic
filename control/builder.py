@@ -25,6 +25,8 @@ def check_for_navigation(pipeline):
             and command_refers_to_dir(pipeline.commands[0]):
         go_command = parser.get_command('go', [])
         pipeline.add(go_command) 
+        file_command = parser.get_command('file', ['.'])
+        pipeline.add(file_command) 
         ls_command = parser.get_command('ls', [])
         pipeline.add(ls_command) 
 
