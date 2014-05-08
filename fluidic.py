@@ -6,11 +6,13 @@
 import os
 from view import ui
 from control import access, output, processor
+import locator
 
 name = "Fluidic"
 version = "0.4.0"
 
 if __name__ == '__main__':
+
     path = access.interpret_path("~")
     os.chdir(path)
 
