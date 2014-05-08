@@ -46,4 +46,4 @@ def clear():
         file.write('')
 
 def welcome():
-    apps.about.execute(None, None, None)
+    apps.welcome.execute(None, None, None)
