@@ -89,5 +89,5 @@ def intelligently_add_start(new_pipeline):
     else:
         print new_pipeline.describe()
         raise Exception(
-            "Not sure how to wire up an input of type " + 
+            "Couldn't autowire an input of type " + 
             str(new_pipeline.input.__name__))
