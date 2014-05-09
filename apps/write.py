@@ -10,7 +10,9 @@ from model import iotypes
      output = None)
 def execute(input, options, environment):
 
-    print "Would have written to " + options[0]
+    destination = options[0]
 
-
+    with open(destination, 'w') as f:
+        f.write(input)
+        
 

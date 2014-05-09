@@ -6,10 +6,10 @@ import re
 # yet
 
 regex = """
-    (?P<command>[\w\.~<>+-/:@^]+)  # command; any contiguous alphanumeric
-    \s*                            # optional whitespace
-    (\((?P<options>.*?)\))?        # options delimited by () may be present
-    \s*                            # optional whitespace
+    (?P<command>[\w\.~<>+-/:@^"!]+)  # command; any contiguous alphanumeric
+    \s*                              # optional whitespace
+    (\((?P<options>.*?)\))?          # options delimited by () may be present
+    \s*                              # optional whitespace
     """
 pattern = re.compile(regex, re.VERBOSE)
 

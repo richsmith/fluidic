@@ -23,6 +23,7 @@ def get_command(command_str, options):
     assert command_str != None and options != None
     interpreters = \
         [check_for_null,
+         check_for_text,
          check_for_app,
          check_for_external,
          check_for_file,
@@ -35,13 +36,18 @@ def get_command(command_str, options):
 
     # shouldn't get here
     raise Error(command_str + " not found")
-    
+
 
 def check_for_null(command_str, options):
     if command_str == '':
         assert options == []
-        app = registry.get_app("null")
-        return pipeline.Command(app, options)
+        return create_command('null', options)
+
+
+def check_for_text(command_str, options):
+    if command_str.startswith('"') and command_str.endswith('"'):
+        options = [command_str[1:-1]]
+        return create_command('literal', options)
 
 
 def check_for_app(command_str, options):
@@ -52,9 +58,8 @@ def check_for_app(command_str, options):
 
 def check_for_external(command_str, options):
     if access.is_a_program(command_str):
-        app = registry.get_app("ext")
         options.insert(0, command_str)
-        return pipeline.Command(app, options)
+        return create_command('ext', options)
 
 
 def check_for_file(command_str, options):
@@ -62,19 +67,22 @@ def check_for_file(command_str, options):
     
     if globbing.is_glob_command(path) or access.is_valid_path(path):
         assert options == [] # are we ever going to have options for a file?
-        app = registry.get_app("file")
         options = [path]
-        return pipeline.Command(app, options)
+        return create_command('file', options)
 
 
 def check_for_unknown(command_str, options):
     # if we get to this point we don't know what the user is requesting
-    app = registry.get_app("unknown")
+    app = registry.get_app('unknown')
     options = [command_str]
     if app == None:
         raise Exception('App "Unknown" is missing')
     return pipeline.Command(app, options)
 
+def create_command(app_name, options):
+    app = registry.get_app(app_name)
+    command = pipeline.Command(app, options)
+    return command
 
 def parse_command(string):
     string = string.strip()

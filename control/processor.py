@@ -9,7 +9,7 @@ import apps.read, apps.write, apps.remove, apps.move, apps.copy
 import apps.sort, apps.reverse, apps.keep, apps.drop
 import apps.history, apps.version, apps.show
 import apps.error, apps.ext, apps.exit
-import apps.text, apps.html
+import apps.text, apps.html, apps.literal
 import apps.ol
 import apps.null, apps.file
 import apps.clear
