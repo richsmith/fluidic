@@ -13,16 +13,20 @@ def execute(input, options, environment):
     command = options[0]
 
     options = options[1:]
-    option_str = ""
-    for option in options:
-        option_str = option_str + " " + str(option)
+
+    option_str = " ".join(options)
 
     if options:
-        proc = subprocess.Popen([command, option_str], stdout=subprocess.PIPE)
+        proc = subprocess.Popen([command, option_str], 
+            stdout=subprocess.PIPE, stderr = subprocess.PIPE)
     else:
-        proc = subprocess.Popen([command], stdout=subprocess.PIPE)
+        proc = subprocess.Popen([command], 
+            stdout=subprocess.PIPE, stderr = subprocess.PIPE)
 
-    stdout_value = proc.communicate()[0]
-    #print "out: ", repr(stdout_value)
+    stdout_value, stderr_value = proc.communicate()
+
+    if stderr_value != '':
+        raise Exception(stderr_value)
+
 
     return stdout_value
