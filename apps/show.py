@@ -2,7 +2,7 @@ from model.app import app
 from model import iotypes
 
 import properties
-from control import access, mime, icon
+from control import access, mime, icon, output
 from util import html
 import highlight
 
@@ -27,13 +27,14 @@ def execute(input, options, environment):
     if isinstance(file, iotypes.Directory):
         return show_directory(file)
     elif icon.is_thumbnailable(file):
-        output = show_image(file)
+        _output = show_image(file)
     elif isinstance(file, iotypes.CodeFile):
-        output = html.div(get_highlight(file), clazz='text')
+        _output = html.div(get_highlight(file), clazz='text')
     else: # else assume text file for now
-        output = html.div(show_text(file), clazz='text')
+        _output = html.div(show_text(file), clazz='text')
 
-    return html.div(output, clazz='show')
+    output.print_misc(_output, 'show')
+    #return html.div(_output, clazz='show')
 
 def show_image(file):
     url = access.path_to_url(file.path)
@@ -46,7 +47,6 @@ def show_text(file):
     return content
 
 def show_code(file):
-    #return html.div(access.read_file(file), clazz='show')
     return hilight(file)
 
 def show_directory(file):
@@ -54,5 +54,4 @@ def show_directory(file):
 
 
 def get_highlight(file):
-    #return highlight.execute(access.read_file(file), [file.mime], None)
     return highlight.execute(file, [], None)
