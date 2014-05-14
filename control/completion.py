@@ -27,6 +27,7 @@ def get_file_superstrings(substring):
             candidate = os.path.join(absolute_directory, filename)
             if os.path.isdir(candidate):
                 filename += os.sep # add separator to directories
+            filename = escape_spaces(filename)
             superstrings.append(os.path.join(quoted_directory, filename))
 
     #superstrings = filter(lambda f:f.startswith(fragment), filenames)
@@ -34,3 +35,5 @@ def get_file_superstrings(substring):
 
 
 
+def escape_spaces(filename):
+    return filename.replace(' ', '\ ')
