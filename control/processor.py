@@ -1,7 +1,9 @@
-import model.environment
-import parser, builder
-import access
 import traceback
+
+import model.environment
+import parser, builder, access
+import apps
+
 
 environment = model.environment.Environment()
 environment.history = access.read_history()
