@@ -6,6 +6,7 @@
 import os
 from view import ui
 from control import access, output, processor
+from apps import *
 
 name = "Fluidic"
 version = "0.4.0"

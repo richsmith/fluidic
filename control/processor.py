@@ -1,32 +1,17 @@
 import model.environment
 import parser, builder
 import access
-
-import apps.unknown
-import apps.grid, apps.table
-import apps.ls, apps.go, apps.properties, apps.recurse
-import apps.read, apps.write, apps.append, apps.remove, apps.move, apps.copy
-import apps.sort, apps.reverse, apps.keep, apps.drop
-import apps.history, apps.version, apps.show
-import apps.error, apps.ext, apps.exit
-import apps.text, apps.html, apps.literal
-import apps.ol
-import apps.null, apps.file
-import apps.clear
-import apps.welcome, apps.about, apps.suggest
-
-#debugging
-import apps.pipeline
 import traceback
 
-global environment
 environment = model.environment.Environment()
 environment.history = access.read_history()
+
 
 def enter(string):
     assert string != None
     record_command_if_needed(environment, string)
     return process(string)
+
 
 def process(string):
     try:
