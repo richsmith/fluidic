@@ -1,14 +1,7 @@
-table type
 play video/music
 o/s hooks
 clipboard hooks
-interactive command completion
-    completing commands after pipe
-rm
-cp
 bash colours?
-loading apps (finished?)
-properties (to finish)
 asynchronous
 non-linear
 configuration
@@ -16,12 +9,9 @@ menu bar
 tutorial
 input highlighting
 dom interaction
-handle errors for import
 import check version
-autopipeline
 click on files
 piping to external programs
-multi names for apps
 filenames with spaces etc.
 
 apt
