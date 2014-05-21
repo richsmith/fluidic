@@ -5,17 +5,19 @@ class App(object):
     def __init__(self,
                  function,
                  name,
+                 aliases = [],
                  input = None,
                  output = None,
                  autoserial = True,
                  preferred_renderer = None,
-                 aliases = []):
+                 format_class = 'output'):
         self.function = function
         self.name = name
         self.aliases = aliases
         self.input = input
         self.output = output
         self.preferred_renderer = preferred_renderer
+        self.format_class = format_class
 
         if (autoserial):
             self._function = function

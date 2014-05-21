@@ -6,7 +6,8 @@ from util import html
 
 @app(name = "properties",
      input = iotypes.File,
-     output = iotypes.Html)
+     output = iotypes.Html,
+     format_class = 'properties')
 def execute(input, options, environment):
 
     file = input
