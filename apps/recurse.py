@@ -4,7 +4,8 @@ from model.app import app
 from model import iotypes
 from apps import file
 
-@app(name = "recurse",
+@app(name = 'recurse',
+     aliases = ['!'],
      input = iotypes.File,
      output = iotypes.File,
      autoserial = False)

@@ -3,7 +3,8 @@ import re
 from model.app import app
 from model import iotypes
 
-@app(name = "keep",
+@app(name = 'keep',
+     aliases = ['+'],
      input = iotypes.File,
      output = iotypes.File,
      autoserial = False)
