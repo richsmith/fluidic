@@ -1,0 +1,177 @@
+<html>
+<head>
+ <title>Fluidic</title>
+ <link rel = "stylesheet" type = "text/css" href="stylesheet.css">
+</head>
+
+<body>
+<h1>Fluidic</h1>
+<p>Fluidic is an ambitious project to build a next-generation shell which is integrated with the GUI and has a new syntax.</p>
+
+<p>This is an outline of what I think are some of the limitations of current shells, followed by an exploration of how Fluidic may be able to overcome some of those limitations.</p>
+
+<img src="fluidic-screenshot-0.png" style="width: 500px">
+
+<h2>The problem with shells</h2>
+
+<p>The traditional shell is fast and extremely powerful in the hands of the experienced user. However, this comes at a cost; the learning curve is very steep, discoverability is very low, and learning the shell's commands places a high cognitive load on the user.</p>
+
+<p>(By "traditional shell" I am talking here primarily about UNIX shells such as bash, zsh, and so on, and I am going to assume you have some familiarity with said shells. However, these points should also be mostly applicable to other shells such as the Windows console and PowerShell).</p>
+
+<p>Traditional shells fail to make effective use of the GUI. They are faster and more powerful than a graphical file handler but they are also very much inferior for some simple tasks such as recognising an image file. Ideally we would like the best of both worlds but instead we are forced to choose one paradigm or the other.</p>
+
+<p>Simply using the shell at all demands learning quite a few concepts (such as current working directory and piping), and a large number of commands abbreviated in arbitrary fashion (e.g. <code>ls</code> for list, <code>cd</code> for change directory, <code>pwd</code> for print working directory).</p>
+
+<p>Using the shell for more complicated tasks is even harder. To do any moderately complex task it is necessary to be aware of the subtleties of the various command line tools available. Unfortunately these are legion.</p>
+
+<p>Unfortunately the command line tools available do not accept switches in a standardised way. Consider a command, <code>bar</code>, that we wish to invoke on the program <code>foo</code>. The means of invoking <code>bar</code> with <code>foo</code> could be:</p>
+
+<ul>
+<li><code>foo -b</code></li>
+<li><code>foo -bar</code></li>
+<li><code>foo --bar</code></li>
+<li><code>foo -bar=1</code></li>
+<li><code>foo -bar=true</code></li>
+</ul>
+
+<p>...and so on! The only way to know how to invoke the command is to have used it before, or to look it up (though if you know something about the program you may have a clue as to how it is called &mdash; e.g. if it is part of the GNU suite of tools).</p>
+
+<p>Another problem is that doing the same sort of thing requires different commands. For example, consider recursion. Shell builtins and other command-line programs often have an option for enabling recursive application of the command to a hierarchy of files. For example, ls uses -r and chmod uses -R.</p>
+
+<p>A class of this type of problem that is particularly prevalent is the lack of standardisation of specifying input and output. Some utilities expect input from standard input, whereas others expect a filename passed as the final argument. Still others require a switch or option to set the input (e.g. <code>tar -xf filename</code>).</p>
+
+<p>Output is similarly arbitrary, with again programs expecting to send output to standard output (<code>cat filename</code>), or a specified file (<code>gcc -o filename</code>)</p>
+
+
+<p>The are various reasons for why these problems exist. Some are historical anomalies, or a lack of standardisation. Others are compromises.</p>
+
+<p>Another problem with shells (as I see it) is a lack of modularity.</p>
+
+<p>Consider the following problems:</p>
+
+<ol>
+<li>Delete all the files without an extension of <code>.java</code> below the directory of <code>~/code/</code> that were created today</li>
+<li>Find all the files created between the 1st and 10th April 2014 and list them in order of size (largest first), together with their attributes.</li>
+</ol>
+
+<p>Imagine if we had a next-generation shell that was regular, consistent, modular, designed for usability from the ground up, and well-integrated with the GUI. Maybe it is too much to get there in one step but Fluidic is an experiment to see what it might look like.</p>
+
+
+<h2>About Fluidic</h2>
+
+<p>You may wish to read this section whilst playing with Fluidic.</p>
+
+<!-- <p>I should point out before we start that Fluidic is very much experimental and subject to change. If you think any of the ideas here are terrible please feel fre to send me an email with your thoughts!</p> -->
+
+<h3>Basic Commands</h3>
+<p>The most immediately noticeable thing about Fluidic is probably the fact that it is graphical. If you enter <code>ls</code>, you will get a list of filenames from your working directory back with icons.</p>
+
+<p>Cool (hopefully) but also useful in that you get the visual feedback of a GUI (e.g. thumbnails of images) without sacrificing the speed and power of the command line (or so goes the theory at least).</p>
+
+<p>To view an individual file (such as an image file or a text file), simply type the name of the file. That's it.</p>
+
+<p>Instead of a <code>cd</code> command, fluidic uses <code>go</code> (at least as easy to type and just as short; cd is also provided as an alias though). However, you will rarely need to type this; in Fluidic it is only necessary to type the name of a directory to navigate to it.</p>
+
+<p>To see the properties of a file (or directory), type its name followed by <code>properties</code> (e.g. <code>foo.jpeg properties</code>). It may feel odd (unless you familiar with languages such as Lisp) typing the noun then the verb; however there are benefits. The main one is regularity. In each fluidic command there is pipeline reading from left to right.</p>
+
+<h3>Pipelines</h3>
+<p>Unlike traditional shells there is no need to type the pipe (<code>|</code>) operator to chain commands together. Commands that are listed in order are automatically turned into a pipeline.</p>
+
+<p>To demonstrate an example of this, consider the <code>ls</code> command we looked at above. You may want to see a different view of your files; for example, you can type <code>ls table</code> to get a tabular view of your files. Here we are piping the output of <code>ls</code> to the <code>table</code> renderer. (It is easy using Fluidic to convert between output formats and should be easy to add new ones as required.)</p>
+
+<p>If you find those icons get in the way, it easy to revert to console behaviour. Try typing <code>ls text</code>. That list of filenames will be returned in purely textual form. This piping should work for all commands that produce an output.</p>
+
+<p>Let's talk more about Fluidic's pipeline. (If you're not interested in the internals of Fluidic, feel free to skip to the next section). In concept this is very similar to the traditional shell idea of the construction of commands through pipes.</p>
+
+<p>A conceptual difference between bash and Fluidic is that bash commands expect an input and produce an output; Fluidic expects a pipeline that handles its own input and output. If a command is supplied that is not a complete pipeline, Fluidic attempts to build one out of the command.</p>
+
+<p>Fluidic has a rudimentary type system whereby each command declares what kind of input it expects and what kind of output it supplies. This typing allows Fluidic to build a pipeline.</p>
+
+<p>Fluidic checks the first command to see what input it is expecting. If it doesn't expect an input, Fluidic doesn't do anything. If it expects a file, Fluidic adds a command (behind the scenes) to supply the current directory. If text is expected, Fluidic reverts to standard input. If a user is expected, Fluidic assumes the current user.</p>
+
+<p>Fluidic also checks the last command to see what output it produces. If it doesn't output anything then Fluidic considers the pipeline complete, but if it does then Fluidic ensures that the output is handled. Commands may nominate a default command to handle their output (for example the history command requests its output to be an ordered list); in this case, Fluidic adds this command to the end of the pipeline. If not, Fluidic adds a renderer to the end of the pipeline to handle the output: for example, if a list of files are returned at the end of the pipeline, Fluidic by default termminates the pipeline with a list files renderer.</p>
+
+<p>If you would like to know what the actual pipeline Fluidic is building behind the scenes, the command <code>pipeline</code> returns a visual representation, as in the following example: <code>pipeline(ls reverse text)</code>.
+</p>
+
+<h3>Options</h3>
+
+<p>Regarding options, Fluidic's philosophy is that these should be reduced where possible. One way of doing this is to separate these options into different commands.</p>
+
+<p>Recall above where we looked at the different recursion options in different commands. Fluidic uses a separate command for recursion, <code>recur</code>. Try typing <code>recur ls</code> to see all files below the current directory.
+
+<p><code>recur</code> can be used anywhere a command expects a file type as input so there should be no need to check man pages for the correct syntax, nor complain about a command for not providing a facility for recursion.</p>
+
+<p>Some commands do need options, and these are specified in brackets after the command. An example is the <code>sort</code> command which may be used like this: <code>sort(size)</code> or <code>sort(created)</code>. 
+
+<p>To get files sorted in reverse order, there is no option to remember for each command, but a different command: <code>sort(created) reverse</code>.
+</p>
+
+
+<h3>Combining commands</h3>
+
+<p>If you pass a file to a file in the pipeline, such as in this example: <code>data-file-0 data-file-1 wc</code>, then the two files are added together as a collection and passed to the following command.</p>
+
+<p>In concept there is little difference between supplying one file or several files to a command. Fluidic wraps up individual files as a list of one to provide a normalised input. All commands are expected to handle lists as inputs.</p>
+
+<p>The usual commands are available for reading and writing to files, including <code>write</code>, <code>append</code>, <code>copy</code> and <code>read</code>.
+
+<p>Some commands which I expect to be used frequently have symbol aliases:</p>
+
+<table>
+<tr><td>keep</td><td>+</td></tr>
+<tr><td>drop</td><td>-</td></tr>
+<tr><td>sort</td><td>^</td></tr>
+<tr><td>write</td><td>&gt;</td></tr>
+<tr><td>append</td><td>&gt;&gt;</td></tr>
+<tr><td>read</td><td>&lt;</td></tr>
+<tr><td>copy</td><td>-&gt;</td></tr>
+<tr><td>recurse</td><td>!</td></tr>
+</table>
+
+<p>Some examples of putting it all together:</p>
+
+<ol>
+<li>Save in a file a list of all the files above 20MB in the directory data/, sorted by date modified: <code>data/ +(size&gt;20M) ^(modified) text &gt;(large-sorted)</code></li>
+<li>Concatenate the contents of all files in the data/ directory and subdirectories not created today: <code>data/ ! -(created=today) &lt;</code></li>
+</ol>
+
+
+
+</body>
+</html>
+<!--
+FAQ
+
+What is the goal of this project?
+
+To experiment with 
+
+Is Fluidic going to replace my shell for everyday work?
+
+Fluidic is very much experimental at this stage. It is a bit too slow to use for day-to-day work (it needs better integration with WebKit and may need rewriting from Python to a lower-level language) and currently lacks many features compared to a modern Unix shell.
+
+However, I find Fluidic useful enough that in some cases I fire it up in preference to opening a traditional terminal.
+
+How complete is Fluidic?
+
+I don't like $FEATURE and you're an idiot for including it.
+
+That's not technically a question, but never mind. 
+
+Although it does many of the basics of shell 
+it does not 
+
+
+
+todo
+
+sort by multiple cols
+unit tests
+tree view
+spaces in filenames
+hierarchical entities in css?
+reloading html?
+git ignoring
+keep, filters etc.
+-->
